@@ -1,16 +1,14 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import "./App.css";
+import { Product } from "./component/Product";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [text, setText] = useState("");
 
   return (
     <>
-      <div className=''>{count}</div>
-      <button onClick={() => setCount(count + 1)}> Count++</button>
-      <br></br>
-      halo chao thay
+      <Product />
     </>
   );
 }
