@@ -1,201 +1,205 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
-import { Table, Button, Form } from "react-bootstrap";
+import { Button, Form, Table } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import * as yup from "yup";
 
-type typeProduct = {
-  id: number;
+type dataProduct = {
   name: string;
   price: number;
   desc: string;
+  category: string;
+  image: string;
+  id: number;
 };
+type FormData = {
+  name: string;
+  price: number;
+  desc: string;
+  category: string;
+  image: string;
+};
+const schema = yup.object({
+  name: yup.string().required(),
+  price: yup.number().min(1).required(),
+  desc: yup.string().required(),
+  category: yup.string().required(),
+  image: yup.string().required(),
+});
 
-type formProduct = {
-  name: string;
-  price: number;
-  desc: string;
-};
-type ProductEdit = {
-  id: number;
-  name: string;
-  price: number;
-  desc: string;
-};
 export function Product() {
-  const [data, setData] = useState<typeProduct[]>([]);
-  const [productAdd, setProductAdd] = useState<formProduct>({
-    name: "",
-    price: 0,
-    desc: "",
-  });
-  const [productEdit, setProductEdit] = useState<ProductEdit | null>(null);
+  const [data, setdata] = useState<dataProduct[]>([]);
+  const [dataedit, setdataedit] = useState<dataProduct | null>(null);
 
-  const handleChangeForm =
-    (name: keyof formProduct) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setProductAdd((prev) => ({ ...prev, [name]: event.target.value }));
-    };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    defaultValues: { name: "", price: 0, desc: "", image: "" },
+  });
   async function getAll() {
-    let res = await fetch("http://localhost:3000/product");
-    let data = await res.json();
+    const res = await fetch("http://localhost:3000/product");
+    const data = await res.json();
     if (data) {
-      setData(data);
+      setdata(data);
     }
   }
   useEffect(() => {
     getAll();
   }, []);
-
-  async function handleDelete(id: number) {
-    await fetch(`http://localhost:3000/product/${id}`, {
-      method: "DELETE",
-    });
-    getAll();
+  function setValueProduct(
+    name: string,
+    price: number,
+    desc: string,
+    image: string
+  ) {
+    setValue("name", name);
+    setValue("price", price);
+    setValue("desc", desc);
+    setValue("image", image);
   }
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (productEdit) {
-      const res = await fetch(
-        `http://localhost:3000/product/${productEdit.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(productAdd),
-        }
-      );
+  async function OnSubmit(product: FormData) {
+    if (dataedit) {
+      let res = await fetch(`http://localhost:3000/product/${dataedit.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(product),
+      });
       const data = await res.json();
       if (data) {
-        alert("upadte thnah ocng");
-        setProductAdd({
-          name: "",
-          price: 0,
-          desc: "",
-        });
-        setProductEdit(null);
+        toast.success("Update success");
+        setValueProduct("", 0, "", "");
+        setdataedit(null);
         getAll();
       }
     } else {
-      const res = await fetch("http://localhost:3000/product", {
+      let res = await fetch("http://localhost:3000/product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(productAdd),
+        body: JSON.stringify(product),
       });
       const data = await res.json();
       if (data) {
-        alert("add thnah ocng");
-        setProductAdd({
-          name: "",
-          price: 0,
-          desc: "",
-        });
+        toast.success("add success");
+        setValueProduct("", 0, "", "");
         getAll();
       }
     }
   }
-
   function handleUpdate(id: number) {
     let arr = data.filter((item) => item.id === id);
     if (arr[0]) {
-      setProductEdit(arr[0]);
-      setProductAdd({
-        name: arr[0].name,
-        price: arr[0].price,
-        desc: arr[0].desc,
+      setdataedit(arr[0]);
+      setValueProduct(arr[0].name, arr[0].price, arr[0].desc, arr[0].image);
+    }
+  }
+  async function handleDelete(id: number) {
+    let check = confirm("Do you want to Delete?");
+    if (check) {
+      await fetch(`http://localhost:3000/product/${id}`, {
+        method: "DELETE",
       });
+      toast.success("Delete Success");
+      getAll();
     }
   }
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
         style={{
-          width: "800px",
           border: "1px solid grey",
           padding: "20px",
           marginTop: "20px",
+          width: "800px",
         }}>
-        <h2 style={{ textAlign: "center" }}>Add Product</h2>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId=''>
-            <Form.Label>Product Name</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Enter product name'
-              value={productAdd.name}
-              onChange={handleChangeForm("name")}
-            />
-          </Form.Group>
-
-          <Form.Group controlId=''>
-            <Form.Label>Product Price</Form.Label>
-            <Form.Control
-              type='number'
-              placeholder='Enter product price'
-              value={productAdd.price}
-              onChange={handleChangeForm("price")}
-            />
-          </Form.Group>
-
-          <Form.Group controlId=''>
-            <Form.Label>Product Description</Form.Label>
-            <Form.Control
-              type='textarea'
-              placeholder='Enter product description'
-              value={productAdd.desc}
-              onChange={handleChangeForm("desc")}
-            />
-          </Form.Group>
-
-          <Form.Group>
-            <Button
-              variant='primary'
-              style={{ marginTop: "10px" }}
-              type='submit'>
-              {productEdit ? "Update" : "Create"}
+        <div>
+          <h2 style={{ textAlign: "center" }}>Add Product</h2>
+          <Form onSubmit={handleSubmit(OnSubmit)}>
+            <Form.Group>
+              <Form.Label>Name</Form.Label>
+              <Form.Control {...register("name")} placeholder='Name' />
+              <p>{errors?.name?.message}</p>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Price</Form.Label>
+              <Form.Control {...register("price")} placeholder='Price' />
+              <p>{errors?.price?.message}</p>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Desc</Form.Label>
+              <Form.Control {...register("desc")} placeholder='Desc' />
+              <p>{errors?.desc?.message}</p>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Image</Form.Label>
+              <Form.Control {...register("image")} placeholder='Image' />
+              <p>{errors?.image?.message}</p>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Category</Form.Label>
+              <Form.Select {...register("category")}>
+                <option value={"iphone"}>Iphone</option>
+                <option value={"samsung"}>Samsung</option>
+              </Form.Select>
+              <p>{errors?.desc?.message}</p>
+            </Form.Group>
+            <Button type='submit' variant='primary'>
+              {dataedit ? "Update" : "Add"}
             </Button>
-          </Form.Group>
-        </Form>
-
-        <h2 style={{ textAlign: "center" }}>List Product</h2>
-        <Table>
-          <thead>
-            <tr>
-              <th scope='col'>id</th>
-              <th scope='col'>Name</th>
-              <th scope='col'>Price</th>
-              <th scope='col'>Desc</th>
-              <th scope='col'>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data &&
-              data.length &&
-              data.map((item) => {
-                return (
-                  <tr key={item.id}>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.price}</td>
-                    <td>{item.desc === "" ? "đang cập nhật" : item.desc}</td>
-                    <td>
-                      <Button
-                        onClick={() => handleUpdate(item.id)}
-                        variant='warning'>
-                        Edit
-                      </Button>
-                      <Button
-                        onClick={() => handleDelete(item.id)}
-                        variant='danger'>
-                        Delete
-                      </Button>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </Table>
+          </Form>
+          <h2 style={{ textAlign: "center" }}>List Product</h2>
+          <Table>
+            <thead>
+              <tr>
+                <td>Stt</td>
+                <td>Name</td>
+                <td>Image</td>
+                <td>Price</td>
+                <td>Desc</td>
+                <td>Category</td>
+                <td>Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {data &&
+                data.length &&
+                data.map((item, index) => {
+                  return (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>{item.name}</td>
+                      <td>
+                        <img src={item.image} width={50} height={50} alt='' />
+                      </td>
+                      <td>{item.price}</td>
+                      <td>{item.desc}</td>
+                      <td>{item.category}</td>
+                      <td>
+                        <Button
+                          onClick={() => handleUpdate(item.id)}
+                          variant='warning'>
+                          Edit
+                        </Button>
+                        <Button
+                          onClick={() => handleDelete(item.id)}
+                          variant='danger'>
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
+        </div>
       </div>
     </div>
   );

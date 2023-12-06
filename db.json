@@ -1,9 +1,26 @@
 {
   "product": [
     {
-      "name": "Iphone 14",
-      "price": 200,
-      "desc": "cap nhat des",
+      "image": "https://th.bing.com/th/id/OIP.oAIxA0fr7zzrxI_y2YP_eAHaHa?rs=1&pid=ImgDetMain",
+      "category": "iphone",
+      "desc": "cap nhat new",
+      "price": 2000,
+      "name": "Iphone 15",
+      "id": 1
+    },
+    {
+      "name": "Iphone 15",
+      "price": 2000,
+      "desc": "cap nhat 2020",
+      "category": "samsung",
+      "image": "https://th.bing.com/th/id/OIP.oAIxA0fr7zzrxI_y2YP_eAHaHa?rs=1&pid=ImgDetMain",
+      "id": 2
+    }
+  ],
+  "user": [
+    {
+      "email": "abc@gmail.com",
+      "password": "123456",
       "id": 1
     }
   ]
