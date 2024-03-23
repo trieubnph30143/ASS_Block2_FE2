@@ -1,59 +1,27 @@
 import { useEffect, useState } from "react";
+import product from "../image/product.jpg";
 
 export default function Product() {
-  const [product, setProduct] = useState([]);
-  useEffect(() => {
-    fetch("http://localhost:3000/product")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data: any) => {
-        setProduct(data);
-      });
-  }, []);
-
   return (
     <>
-      <div
-        className=''
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr",
-          gap: "10px",
-          padding: "0 20px",
-        }}>
-        {product &&
-          product.length &&
-          product.map((item: any) => {
-            return (
-              <div className='group relative'>
-                <div className='aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80'>
-                  <img
-                    src='https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg'
-                    alt="Front of men's Basic Tee in black."
-                    className='h-full w-full object-cover object-center lg:h-full lg:w-full'
-                  />
-                </div>
-                <div className='mt-4 flex justify-between'>
-                  <div>
-                    <h3 className='text-sm text-gray-700'>
-                      <a href='#'>
-                        <span aria-hidden='true' className='absolute inset-0' />
-                        {item.title}
-                      </a>
-                    </h3>
-                    <p className='mt-1 text-sm text-gray-500'> {item.desc}</p>
-                  </div>
-                  <p className='text-sm font-medium text-gray-900'>
-                    $ {item.price}
-                  </p>
-                  <p className='text-sm font-medium text-gray-900'>
-                    {item.review}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+      <div className=''>
+        <img src={product} alt='' />
+        <div className='flex justify-content-between mt-[10px]'>
+          <h6 style={{ fontWeight: "bold" }}>Round Dingning table</h6>
+          <span style={{ fontWeight: "bold" }}>$55</span>
+        </div>
+        <span>Bed Table</span>
+        <button
+          className=' mt-[10px]'
+          style={{
+            width: "100%",
+            height: "49px",
+            color: "black",
+            border: "1px solid black",
+            borderRadius: "10px",
+          }}>
+          Add to Cart
+        </button>
       </div>
     </>
   );

@@ -1,42 +1,111 @@
 import React from "react";
+import logo from "../image/z5268627828943_96922bac34d1406d53e2d91d78f56a59.jpg";
 
 type Props = {};
 
 const Footer = () => {
   return (
-    <footer className='bg-white rounded-lg shadow m-4 dark:bg-gray-800'>
-      <div className='w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between'>
-        <span className='text-sm text-gray-500 sm:text-center dark:text-gray-400'>
-          © 2023{" "}
-          <a href='https://flowbite.com/' className='hover:underline'>
-            Flowbite™
-          </a>
-          . All Rights Reserved.
-        </span>
-        <ul className='flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0'>
-          <li>
-            <a href='#' className='hover:underline me-4 md:me-6'>
+    <div className='container mx-auto  mt-[100px]'>
+      <div className=' flex justify-content-between align-items-start'>
+        <div className='flex  gap-2 h-[32px]'>
+          <img src={logo} alt='' />
+          <span style={{ fontWeight: "bold", fontSize: "20px" }}>Design</span>
+        </div>
+        <div className='w-[400px] flex justify-content-between align-items-end'>
+          <div className=''>
+            <span
+              style={{
+                fontWeight: "bold",
+                fontSize: "16px",
+              }}>
+              Categories
+            </span>
+            <ul className=' p-0 flex flex-column gap-2 mt-[20px]'>
+              <li>Wall Art</li>
+              <li>Vase</li>
+              <li>Chart</li>
+              <li>Teat Ketle</li>
+              <li>Barkets</li>
+            </ul>
+          </div>
+          <div className=''>
+            <ul className='mt-[20px]  p-0 flex flex-column gap-2 '>
+              <li>Wall Art</li>
+              <li>Vase</li>
+              <li>Chart</li>
+              <li>Teat Ketle</li>
+              <li>Barkets</li>
+            </ul>
+          </div>
+          <div className=''>
+            <span
+              style={{
+                fontWeight: "bold",
+                fontSize: "16px",
+              }}>
               About
-            </a>
-          </li>
-          <li>
-            <a href='#' className='hover:underline me-4 md:me-6'>
-              Privacy Policy
-            </a>
-          </li>
-          <li>
-            <a href='#' className='hover:underline me-4 md:me-6'>
-              Licensing
-            </a>
-          </li>
-          <li>
-            <a href='#' className='hover:underline'>
-              Contact
-            </a>
-          </li>
-        </ul>
+            </span>
+            <ul className='mt-[20px] p-0 flex flex-column gap-2 '>
+              <li>Wall Art</li>
+              <li>Vase</li>
+              <li>Chart</li>
+              <li>Teat Ketle</li>
+              <li>Barkets</li>
+            </ul>
+          </div>
+        </div>
+        <div className='w-[500px]'>
+          <span style={{ fontWeight: "bold", fontSize: "16px" }}>Subcribe</span>
+          <p style={{ margin: "20px 0" }}>
+            Join our newsletter to stay up to date on features and releases.
+          </p>
+          <div className='flex justify-content-between'>
+            <input
+              style={{
+                width: "345px",
+                height: "48px",
+                border: "1px solid black",
+                outline: "none",
+                borderRadius: "5px",
+                padding: "0 10px",
+              }}
+              placeholder='Enter Your Email'
+              type='text'
+            />
+            <button
+              style={{
+                width: "119px",
+                height: "48px",
+                border: "1px solid black",
+                outline: "none",
+                borderRadius: "5px",
+                padding: "0 10px",
+              }}>
+              Subcribe
+            </button>
+          </div>
+          <p style={{ margin: "20px 0", fontSize: "14px" }}>
+            Join our newsletter to stay up to date on features and releases.
+          </p>
+        </div>
       </div>
-    </footer>
+      <div
+        className='mt-[50px] flex justify-content-between'
+        style={{ borderTop: "2px solid grey", padding: "20px 0" }}>
+        <div className=' flex gap-3'>
+          <span>2023 Relume. All right reserved.</span>
+          <span style={{ textDecoration: "underline" }}>Privacy Policy</span>
+          <span style={{ textDecoration: "underline" }}>Terms of Service</span>
+          <span style={{ textDecoration: "underline" }}>Cookies Settings</span>
+        </div>
+        <div className='flex gap-3'>
+          <i className='fa-brands fa-facebook-f'></i>
+          <i className='fa-brands fa-instagram'></i>
+          <i className='fa-brands fa-twitter'></i>
+          <i className='fa-brands fa-linkedin'></i>
+        </div>
+      </div>
+    </div>
   );
 };
 

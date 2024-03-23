@@ -1,3 +1,36 @@
-p {
-  color: red;
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 !important;
+}
+
+.slick-dots {
+  display: flex !important;
+  flex-direction: column;
+  left: -130px;
+  gap: 8px;
+  bottom: 0 !important;
+}
+.slick-dots li {
+  width: 120px !important;
+  height: 120px !important;
+  padding: 10px !important;
+  border: 1px solid black;
+}
+.slick-dots li div img {
+  height: 100px !important;
+  max-width: unset;
+}
+.slick-dots .slick-active {
+  border: 1px solid red;
 }
