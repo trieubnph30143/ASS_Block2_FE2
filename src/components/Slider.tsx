@@ -5,112 +5,155 @@ type Props = {};
 const Slider = (props: Props) => {
   return (
     <div
-      id='default-carousel'
-      className='relative w-full'
-      data-carousel='slide'>
-      {/* Carousel wrapper */}
-      <div className='relative h-56 overflow-hidden rounded-lg md:h-96'>
-        {/* Item 1 */}
-        <div className='hidden duration-700 ease-in-out' data-carousel-item=''>
-          <img
-            src='https://th.bing.com/th/id/R.e79c6b25d4f7724cf9517e79c5c55bed?rik=EkeXxYsxr391%2bw&pid=ImgRaw&r=0'
-            className='absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'
-            alt='...'
-          />
+      id="template-mo-zay-hero-carousel"
+      className="carousel slide"
+      data-bs-ride="carousel"
+    >
+      <ol className="carousel-indicators">
+        <li
+          data-bs-target="#template-mo-zay-hero-carousel"
+          data-bs-slide-to={0}
+          className="active"
+        />
+        <li
+          data-bs-target="#template-mo-zay-hero-carousel"
+          data-bs-slide-to={1}
+        />
+        <li
+          data-bs-target="#template-mo-zay-hero-carousel"
+          data-bs-slide-to={2}
+        />
+      </ol>
+      <div className="carousel-inner">
+        <div className="carousel-item active">
+          <div className="container">
+            <div className="row p-5">
+              <div className="mx-auto col-md-8 col-lg-6 order-lg-last">
+                <img
+                  className="img-fluid"
+                  src="./assets/img/banner_img_01.jpg"
+                  alt=""
+                />
+              </div>
+              <div className="col-lg-6 mb-0 d-flex align-items-center">
+                <div className="text-align-left align-self-center">
+                  <h1 className="h1 text-success">
+                    <b>Zay</b> eCommerce
+                  </h1>
+                  <h3 className="h2">Tiny and Perfect eCommerce Template</h3>
+                  <p>
+                    Zay Shop is an eCommerce HTML5 CSS template with latest
+                    version of Bootstrap 5 (beta 1). This template is 100% free
+                    provided by{" "}
+                    <a
+                      rel="sponsored"
+                      className="text-success"
+                      href="https://templatemo.com"
+                      target="_blank"
+                    >
+                      TemplateMo
+                    </a>{" "}
+                    website. Image credits go to{" "}
+                    <a
+                      rel="sponsored"
+                      className="text-success"
+                      href="https://stories.freepik.com/"
+                      target="_blank"
+                    >
+                      Freepik Stories
+                    </a>
+                    ,
+                    <a
+                      rel="sponsored"
+                      className="text-success"
+                      href="https://unsplash.com/"
+                      target="_blank"
+                    >
+                      Unsplash
+                    </a>{" "}
+                    and
+                    <a
+                      rel="sponsored"
+                      className="text-success"
+                      href="https://icons8.com/"
+                      target="_blank"
+                    >
+                      Icons 8
+                    </a>
+                    .
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        {/* Item 2 */}
-        <div className='hidden duration-700 ease-in-out' data-carousel-item=''>
-          <img
-            src='https://th.bing.com/th/id/R.e79c6b25d4f7724cf9517e79c5c55bed?rik=EkeXxYsxr391%2bw&pid=ImgRaw&r=0'
-            className='absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'
-            alt='...'
-          />
+        <div className="carousel-item">
+          <div className="container">
+            <div className="row p-5">
+              <div className="mx-auto col-md-8 col-lg-6 order-lg-last">
+                <img
+                  className="img-fluid"
+                  src="./assets/img/banner_img_02.jpg"
+                  alt=""
+                />
+              </div>
+              <div className="col-lg-6 mb-0 d-flex align-items-center">
+                <div className="text-align-left">
+                  <h1 className="h1">Proident occaecat</h1>
+                  <h3 className="h2">Aliquip ex ea commodo consequat</h3>
+                  <p>
+                    You are permitted to use this Zay CSS template for your
+                    commercial websites. You are <strong>not permitted</strong>{" "}
+                    to re-distribute the template ZIP file in any kind of
+                    template collection websites.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        {/* Item 3 */}
+        <div className="carousel-item">
+          <div className="container">
+            <div className="row p-5">
+              <div className="mx-auto col-md-8 col-lg-6 order-lg-last">
+                <img
+                  className="img-fluid"
+                  src="./assets/img/banner_img_03.jpg"
+                  alt=""
+                />
+              </div>
+              <div className="col-lg-6 mb-0 d-flex align-items-center">
+                <div className="text-align-left">
+                  <h1 className="h1">Repr in voluptate</h1>
+                  <h3 className="h2">Ullamco laboris nisi ut </h3>
+                  <p>
+                    We bring you 100% free CSS templates for your websites. If
+                    you wish to support TemplateMo, please make a small
+                    contribution via PayPal or tell your friends about our
+                    website. Thank you.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      {/* Slider indicators */}
-      <div className='absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse'>
-        <button
-          type='button'
-          className='w-3 h-3 rounded-full'
-          aria-current='true'
-          aria-label='Slide 1'
-          data-carousel-slide-to={0}
-        />
-        <button
-          type='button'
-          className='w-3 h-3 rounded-full'
-          aria-current='false'
-          aria-label='Slide 2'
-          data-carousel-slide-to={1}
-        />
-        <button
-          type='button'
-          className='w-3 h-3 rounded-full'
-          aria-current='false'
-          aria-label='Slide 3'
-          data-carousel-slide-to={2}
-        />
-        <button
-          type='button'
-          className='w-3 h-3 rounded-full'
-          aria-current='false'
-          aria-label='Slide 4'
-          data-carousel-slide-to={3}
-        />
-        <button
-          type='button'
-          className='w-3 h-3 rounded-full'
-          aria-current='false'
-          aria-label='Slide 5'
-          data-carousel-slide-to={4}
-        />
-      </div>
-      {/* Slider controls */}
-      <button
-        type='button'
-        className='absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none'
-        data-carousel-prev=''>
-        <span className='inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none'>
-          <svg
-            className='w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180'
-            aria-hidden='true'
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 6 10'>
-            <path
-              stroke='currentColor'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M5 1 1 5l4 4'
-            />
-          </svg>
-          <span className='sr-only'>Previous</span>
-        </span>
-      </button>
-      <button
-        type='button'
-        className='absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none'
-        data-carousel-next=''>
-        <span className='inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none'>
-          <svg
-            className='w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180'
-            aria-hidden='true'
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 6 10'>
-            <path
-              stroke='currentColor'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='m1 9 4-4-4-4'
-            />
-          </svg>
-          <span className='sr-only'>Next</span>
-        </span>
-      </button>
+      <a
+        className="carousel-control-prev text-decoration-none w-auto ps-3"
+        href="#template-mo-zay-hero-carousel"
+        role="button"
+        data-bs-slide="prev"
+      >
+        <i className="fas fa-chevron-left" />
+      </a>
+      <a
+        className="carousel-control-next text-decoration-none w-auto pe-3"
+        href="#template-mo-zay-hero-carousel"
+        role="button"
+        data-bs-slide="next"
+      >
+        <i className="fas fa-chevron-right" />
+      </a>
     </div>
   );
 };

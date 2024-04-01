@@ -65,7 +65,7 @@ const DetailProduct = () => {
             className='slider-container'
             style={{
               width: "500px",
-              marginLeft: "100px",
+              marginLeft: "140px",
               border: "1px solid grey",
               height: 504,
             }}>
