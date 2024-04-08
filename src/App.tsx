@@ -12,6 +12,12 @@ import EditProduct from "./pages/admin/product/EditProduct";
 import ListProduct from "./pages/client/ListProduct/ProductList";
 import Login from "./pages/client/login/Login";
 import DetailProduct from "./pages/client/productDetail/DetailProduct";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ListProductAdmin from "./pages/admin/product/ListProduct";
+import SearchProduct from "./pages/client/search/SearchProduct";
+import PrivateRouter from "./components/PrivateRouter";
+import Register from "./pages/client/register/Register";
 
 function App() {
   return (
@@ -20,17 +26,27 @@ function App() {
         <Routes>
           <Route path='/' Component={LayoutClient}>
             <Route path='' Component={Home} />
-            <Route path='products' Component={ListProduct} />
-            <Route path='detail' Component={DetailProduct} />
+            <Route path='products/:id' Component={ListProduct} />
+            <Route path='detail/:id' Component={DetailProduct} />
             <Route path='login' Component={Login} />
+            <Route path='register' Component={Register} />
+            <Route path='search/:search' Component={SearchProduct} />
           </Route>
-          <Route path='/dashbroad' Component={LayoutAdmin}>
+          <Route
+            path='/dashbroad'
+            element={
+              <PrivateRouter>
+                <LayoutAdmin />
+              </PrivateRouter>
+            }>
             <Route path='' Component={DashBoard} />
             <Route path='add_product' Component={AddProduct} />
-            <Route path='edit_product' Component={EditProduct} />
+            <Route path='list_product' Component={ListProductAdmin} />
+            <Route path='edit_product/:id' Component={EditProduct} />
           </Route>
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </>
   );
 }

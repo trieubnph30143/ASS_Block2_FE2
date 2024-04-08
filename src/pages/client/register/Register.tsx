@@ -1,15 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { signIn } from "../../../service/auth";
+import { signIn, signUp } from "../../../service/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 const schema = yup.object({
   email: yup.string().required(),
   password: yup.string().required(),
+  confirmpassword: yup.string().required(),
 });
 
-const Login = () => {
+const Register = () => {
   const {
     register,
     handleSubmit,
@@ -20,22 +21,22 @@ const Login = () => {
   const navigate = useNavigate();
   const onSubmit = async (value: any) => {
     try {
-      let data: any = await signIn(value);
-      if (data?.status == 0) {
-        localStorage.setItem("token", JSON.stringify(data.token));
-        localStorage.setItem("user", JSON.stringify(data.data));
-        toast.success("Success");
-        if (data.data.role == "admin") {
+      if (value.password === value.confirmpassword) {
+        let data: any = await signUp({
+          email: value.email,
+          password: value.password,
+        });
+        if (data?.status == 0) {
+          toast.success("Success");
+
           setTimeout(() => {
-            navigate("/dashbroad");
+            navigate("/login");
           }, 1000);
         } else {
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
+          toast.error(data.message);
         }
       } else {
-        toast.error(data.message);
+        toast.error("mk khong rung khop");
       }
     } catch (error) {
       console.log(error);
@@ -78,20 +79,32 @@ const Login = () => {
                   </div>
                   <div className='relative'>
                     <input
-                      autoComplete='off'
                       id='password'
                       {...register("password")}
                       type='password'
                       className='peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600'
                       placeholder='Password'
                     />
-                    <label
-                      htmlFor='password'
-                      className='absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm'>
+                    <label className='absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm'>
                       Password
                     </label>
                     <p style={{ color: "red", margin: 0 }}>
                       {errors.password?.message}
+                    </p>
+                  </div>
+                  <div className='relative'>
+                    <input
+                      autoComplete='off'
+                      {...register("confirmpassword")}
+                      type='password'
+                      className='peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600'
+                      placeholder='Confirm Password'
+                    />
+                    <label className='absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm'>
+                      Password
+                    </label>
+                    <p style={{ color: "red", margin: 0 }}>
+                      {errors.confirmpassword?.message}
                     </p>
                   </div>
                   <div className='relative'>
@@ -101,11 +114,6 @@ const Login = () => {
                       Submit
                     </button>
                   </div>
-                  <p
-                    onClick={() => navigate("/register")}
-                    style={{ textDecoration: "underline" }}>
-                    Register
-                  </p>
                 </div>
               </form>
             </div>
@@ -116,4 +124,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

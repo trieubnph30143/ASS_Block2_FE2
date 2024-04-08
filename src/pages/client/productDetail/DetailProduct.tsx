@@ -4,13 +4,41 @@ import anh2 from "../../../image/71Wckz73kGL._SX522_.jpg";
 import anh3 from "../../../image/71BIJB3xsbL._SX522_.jpg";
 import anh4 from "../../../image/71O-Lh2qAiL._SX522_.jpg";
 import Product from "../../../components/Product";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getCategoryProduct, getOneProduct } from "../../../service/product";
+
 const DetailProduct = () => {
-  const arr = [anh1, anh2, anh3, anh4];
+  const { id } = useParams();
+  const [detail, setDetail] = useState<any>({});
+  const [productRelate, setProductRelate] = useState<any>([]);
+
+  useEffect(() => {
+    (async () => {
+      let res = await getOneProduct(id);
+      if (res?.status == 0) {
+        setDetail(res.data);
+        let relate = await getCategoryProduct({
+          id: res.data.categoryId._id,
+          page: 0,
+          limit: 4,
+        });
+        if (relate?.status == 0) {
+          console.log(relate);
+          setProductRelate(relate.data);
+        }
+      }
+    })();
+  }, []);
+
   const settings = {
     customPaging: function (i: any) {
       return (
-        <div style={{}}>
-          <img src={arr[i]} height={100} />
+        <div>
+          <img
+            src={Object.keys(detail).length > 0 && detail.image[i]}
+            height={100}
+          />
         </div>
       );
     },
@@ -70,23 +98,22 @@ const DetailProduct = () => {
               height: 504,
             }}>
             <Slider {...settings}>
-              <div>
-                <img src={anh1} width={500} height={600} />
-              </div>
-              <div>
-                <img src={anh2} width={500} height={600} />
-              </div>
-              <div>
-                <img src={anh3} width={500} height={600} />
-              </div>
-              <div>
-                <img src={anh4} width={500} height={600} />
-              </div>
+              {Object.keys(detail).length > 0 &&
+                detail.image.length &&
+                detail.image.map((item: any) => {
+                  return (
+                    <div>
+                      <img src={item} width={500} height={600} />
+                    </div>
+                  );
+                })}
             </Slider>
           </div>
           <div className='w-[400px]'>
             <div className=''>
-              <h3 className='font-bold'>Havic HV G-92 Gamepad</h3>
+              <h3 className='font-bold'>
+                {Object.keys(detail).length > 0 && detail.title}
+              </h3>
             </div>
             <div className='flex gap-3 mt-[15px]'>
               <div className='flex items-center'>
@@ -145,7 +172,9 @@ const DetailProduct = () => {
             <div
               className=''
               style={{ borderBottom: "2px solid grey", paddingBottom: "20px" }}>
-              <span style={{ fontSize: "25px" }}>$192.00</span>
+              <span style={{ fontSize: "25px" }}>
+                $ {Object.keys(detail).length > 0 && detail.price}
+              </span>
               <p className='mt-[10px]'>
                 PlayStation 5 Controller Skin High quality vinyl with air
                 channel adhesive for easy bubble free install & mess free
@@ -262,10 +291,13 @@ const DetailProduct = () => {
       </div>
       <div className='mt-5'>
         <h2>Other Product</h2>
+
         <div className='grid grid-cols-4 gap-4 mt-5'>
-          {[...Array(4)].map(() => {
-            return <Product />;
-          })}
+          {productRelate &&
+            productRelate.length &&
+            productRelate.map((item: any) => {
+              return <Product item={item} />;
+            })}
         </div>
       </div>
     </div>

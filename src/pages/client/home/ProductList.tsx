@@ -1,6 +1,6 @@
 import Product from "../../../components/Product";
 
-const ProductList = () => {
+const ProductList = ({ product }: any) => {
   return (
     <div style={{ marginTop: "50px" }}>
       <h2>Featured Products</h2>
@@ -18,9 +18,11 @@ const ProductList = () => {
         </button>
       </div>
       <div className='grid grid-cols-4 gap-4 mt-5'>
-        {[...Array(8)].map(() => {
-          return <Product />;
-        })}
+        {product &&
+          product.length &&
+          product.map((item: any) => {
+            return <Product item={item} />;
+          })}
       </div>
     </div>
   );

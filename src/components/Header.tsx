@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../image/z5268627828943_96922bac34d1406d53e2d91d78f56a59.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const [search, setSearch] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const navigate = useNavigate();
+  let check = localStorage.getItem("token");
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setToken("");
+    check = "";
+  };
   return (
     <header>
       <div
@@ -33,10 +44,21 @@ const Header = () => {
                   <span>Language</span>
                   <i className='fa-solid fa-angle-down'></i>
                 </div>
-                <div className='flex gap-1 align-items-center'>
-                  <i className='fa-regular fa-user'></i>
-                  <span>Sign In</span>
-                </div>
+                {check ? (
+                  <div
+                    onClick={handleLogout}
+                    className='flex gap-1 align-items-center'>
+                    <i className='fa-regular fa-user'></i>
+                    <span>LogOut</span>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => navigate("/login")}
+                    className='flex gap-1 align-items-center'>
+                    <i className='fa-regular fa-user'></i>
+                    <span>Sign In</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -75,9 +97,12 @@ const Header = () => {
                 <input
                   type='text'
                   placeholder='Search'
+                  onChange={(e) => setSearch(e.target.value)}
                   style={{ outline: "none", border: "none", width: "70px" }}
                 />
-                <i className='fa-solid fa-magnifying-glass'></i>
+                <i
+                  onClick={() => navigate(`/search/${search}`)}
+                  className='fa-solid fa-magnifying-glass'></i>
               </div>
             </div>
             <div className='flex  align-items-center gap-4'>

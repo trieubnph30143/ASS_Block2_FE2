@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
-import ProductList from "../home/ProductList";
-import { getCategoryProduct } from "../../../service/product";
-import { useParams } from "react-router-dom";
+import { deleteProduct, getProduct } from "../../../service/product";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const ListProduct = () => {
+const ListProductAdmin = () => {
   const [product, setProduct] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(2);
-  const id = "65a4b6ed94169f6d14f5dffe";
+  const navigate = useNavigate();
+
   const getAll = async () => {
     try {
       let skip = page !== 0 ? (page - 1) * limit : 0;
-      let data: any = await getCategoryProduct({ page: skip, limit, id: id });
+      let data: any = await getProduct({ page: skip, limit });
       if (data?.status === 0) {
         setTotalPage(Math.ceil(data.count / data.size));
         setProduct(data.data);
+      } else {
+        let data: any = await getProduct({ page: skip - 1, limit });
+        if (data?.status === 0) {
+          setTotalPage(Math.ceil(data.count / data.size));
+          setProduct(data.data);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -37,7 +43,7 @@ const ListProduct = () => {
   const handleDelete = async (id: any) => {
     try {
       if (confirm("Do you want to delete?")) {
-        let data = await getCategoryProduct(id);
+        let data = await deleteProduct(id);
         if (data?.status === 0) {
           toast.success("Success");
           getAll();
@@ -48,8 +54,74 @@ const ListProduct = () => {
     }
   };
   return (
-    <div className='container mx-auto'>
-      <ProductList product={product} />
+    <>
+      <div className=' w-[1150px]  bg-gray-100 mt-[20px]'>
+        <div className='container max-w-screen-lg mx-auto'>
+          <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+            <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
+              <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+                <tr>
+                  <th scope='col' className='px-6 py-3'>
+                    Title
+                  </th>
+                  <th scope='col' className='px-6 py-3'>
+                    Image
+                  </th>
+                  <th scope='col' className='px-6 py-3'>
+                    Price
+                  </th>
+                  <th scope='col' className='px-6 py-3'>
+                    Category
+                  </th>
+                  <th scope='col' className='px-6 py-3'>
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {product &&
+                  product.length &&
+                  product.map((item: any) => {
+                    return (
+                      <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+                        <th
+                          scope='row'
+                          className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                          {item.title}
+                        </th>
+                        <td className='px-6 py-4'>
+                          <img
+                            src={item.image[0]}
+                            width={50}
+                            height={50}
+                            alt=''
+                          />
+                        </td>
+                        <td className='px-6 py-4'>${item.price}</td>
+                        <td className='px-6 py-4'>{item.categoryId.name}</td>
+                        <td className='px-6 py-4 text-right flex gap-1'>
+                          <button
+                            onClick={() => handleDelete(item._id)}
+                            className='focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'>
+                            Delete
+                          </button>
+                          <button
+                            onClick={() =>
+                              navigate(`/dashbroad/edit_product/${item._id}`)
+                            }
+                            className='focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-2 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900'>
+                            Edit
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       {totalPage === 0 ? (
         ""
       ) : (
@@ -129,8 +201,8 @@ const ListProduct = () => {
           </ul>
         </nav>
       )}
-    </div>
+    </>
   );
 };
 
-export default ListProduct;
+export default ListProductAdmin;

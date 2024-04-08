@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const SideBar = () => {
   return (
     <div>
@@ -14,24 +16,24 @@ const SideBar = () => {
             </div>
             <ul className='flex flex-col py-4'>
               <li>
-                <a
-                  href='#'
+                <Link
+                  to={"/dashbroad"}
                   className='flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'>
                   <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
                     <i className='bx bx-home' />
                   </span>
                   <span className='text-sm font-medium'>Dashboard</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href='#'
+                <Link
+                  to={"/dashbroad/list_product"}
                   className='flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'>
                   <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
                     <i className='bx bx-music' />
                   </span>
-                  <span className='text-sm font-medium'>Music</span>
-                </a>
+                  <span className='text-sm font-medium'>ProductsList</span>
+                </Link>
               </li>
               <li>
                 <a
