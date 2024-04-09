@@ -7,7 +7,7 @@ const ListProductAdmin = () => {
   const [product, setProduct] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(4);
   const navigate = useNavigate();
 
   const getAll = async () => {

@@ -1,9 +1,9 @@
 import Product from "../../../components/Product";
 
-const ProductList = ({ product }: any) => {
+const ProductList = ({ product, title }: any) => {
   return (
     <div style={{ marginTop: "50px" }}>
-      <h2>Featured Products</h2>
+      <h2>{title}</h2>
       <div className='flex justify-content-between align-items-end'>
         <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </span>
         <button

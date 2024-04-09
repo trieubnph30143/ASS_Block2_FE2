@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loading from "../../../components/Loading";
 const schema = yup.object({
   title: yup.string().required(),
   price: yup.number().required(),
@@ -37,6 +38,7 @@ const AddProduct = () => {
     image3: "",
     image4: "",
   });
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -60,6 +62,7 @@ const AddProduct = () => {
   }, []);
 
   const onSubmit = async (value: any) => {
+    setLoading(true);
     try {
       let imageList = [];
       let check = false;
@@ -80,6 +83,8 @@ const AddProduct = () => {
           );
           if (response.status === 200) {
             imageList.push(response.data.url);
+          } else {
+            setLoading(false);
           }
         }
       }
@@ -94,13 +99,15 @@ const AddProduct = () => {
           reset();
           setImageUrl({ image1: "", image2: "", image3: "", image4: "" });
           toast.success("Success");
+          setLoading(false);
         }
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   const handleChangeImage = (event: any, type: string) => {
     setMessageImage((prevState) => ({ ...prevState, [type]: "" }));
     setImage({ ...image, [type]: event.target.files });
@@ -117,6 +124,7 @@ const AddProduct = () => {
 
   return (
     <>
+      {loading && <Loading />}
       <div className=' w-[1150px]  bg-gray-100 mt-[20px]'>
         <div className='container max-w-screen-lg mx-auto'>
           <div>

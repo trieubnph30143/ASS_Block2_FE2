@@ -6,7 +6,7 @@ export default function Product({ item }: any) {
   const navigate = useNavigate();
   return (
     <>
-      <div className='' onClick={() => navigate(`detail/${item._id}`)}>
+      <div className='' onClick={() => navigate(`/detail/${item._id}`)}>
         <img src={item.image[0]} alt='' />
         <div className='flex justify-content-between mt-[10px]'>
           <h6 style={{ fontWeight: "bold" }}>{item.title}</h6>

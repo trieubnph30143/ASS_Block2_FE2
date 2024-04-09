@@ -29,7 +29,7 @@ const DetailProduct = () => {
         }
       }
     })();
-  }, []);
+  }, [id]);
 
   const settings = {
     customPaging: function (i: any) {
@@ -94,7 +94,7 @@ const DetailProduct = () => {
             style={{
               width: "500px",
               marginLeft: "140px",
-              border: "1px solid grey",
+
               height: 504,
             }}>
             <Slider {...settings}>

@@ -5,15 +5,16 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ListProduct = () => {
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState<any>([]);
   const [totalPage, setTotalPage] = useState(0);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(2);
-  const id = "65a4b6ed94169f6d14f5dffe";
+  const [limit, setLimit] = useState(4);
+  const { id } = useParams();
   const getAll = async () => {
     try {
       let skip = page !== 0 ? (page - 1) * limit : 0;
       let data: any = await getCategoryProduct({ page: skip, limit, id: id });
+      console.log(data);
       if (data?.status === 0) {
         setTotalPage(Math.ceil(data.count / data.size));
         setProduct(data.data);
@@ -24,7 +25,7 @@ const ListProduct = () => {
   };
   useEffect(() => {
     getAll();
-  }, [page]);
+  }, [page, id]);
   const handleChangePage = (page: any) => {
     setPage(page);
   };
@@ -34,22 +35,13 @@ const ListProduct = () => {
   const handlePrevPage = () => {
     setPage(page - 1);
   };
-  const handleDelete = async (id: any) => {
-    try {
-      if (confirm("Do you want to delete?")) {
-        let data = await getCategoryProduct(id);
-        if (data?.status === 0) {
-          toast.success("Success");
-          getAll();
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   return (
     <div className='container mx-auto'>
-      <ProductList product={product} />
+      <ProductList
+        title={product && product.length && product[0].categoryId.name}
+        product={product}
+      />
       {totalPage === 0 ? (
         ""
       ) : (

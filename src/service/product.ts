@@ -30,8 +30,13 @@ export const searchProduct = (search: any) => {
   }
 };
 export const addProduct = (data: any) => {
+  let token = localStorage.getItem("token");
   try {
-    return axios.post("/product", data);
+    return axios.post("/product", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (error) {
     console.log(error);
   }

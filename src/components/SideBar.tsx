@@ -1,6 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SideBar = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
+  };
   return (
     <div>
       <>
@@ -19,7 +25,9 @@ const SideBar = () => {
                 <Link
                   to={"/dashbroad"}
                   className='flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'>
-                  <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
+                  <span
+                    style={{ textDecoration: "none" }}
+                    className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
                     <i className='bx bx-home' />
                   </span>
                   <span className='text-sm font-medium'>Dashboard</span>
@@ -36,35 +44,16 @@ const SideBar = () => {
                 </Link>
               </li>
               <li>
-                <a
-                  href='#'
+                <Link
+                  to={"/dashbroad/add_product"}
                   className='flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'>
                   <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
                     <i className='bx bx-drink' />
                   </span>
-                  <span className='text-sm font-medium'>Drink</span>
-                </a>
+                  <span className='text-sm font-medium'>ProductAdd</span>
+                </Link>
               </li>
-              <li>
-                <a
-                  href='#'
-                  className='flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'>
-                  <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
-                    <i className='bx bx-shopping-bag' />
-                  </span>
-                  <span className='text-sm font-medium'>Shopping</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href='#'
-                  className='flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'>
-                  <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
-                    <i className='bx bx-chat' />
-                  </span>
-                  <span className='text-sm font-medium'>Chat</span>
-                </a>
-              </li>
+
               <li>
                 <a
                   href='#'
@@ -75,28 +64,16 @@ const SideBar = () => {
                   <span className='text-sm font-medium'>Profile</span>
                 </a>
               </li>
+
               <li>
-                <a
-                  href='#'
-                  className='flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'>
-                  <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
-                    <i className='bx bx-bell' />
-                  </span>
-                  <span className='text-sm font-medium'>Notifications</span>
-                  <span className='ml-auto mr-6 text-sm bg-red-100 rounded-full px-3 py-px text-red-500'>
-                    5
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href='#'
+                <p
+                  onClick={handleLogout}
                   className='flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800'>
                   <span className='inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400'>
                     <i className='bx bx-log-out' />
                   </span>
                   <span className='text-sm font-medium'>Logout</span>
-                </a>
+                </p>
               </li>
             </ul>
           </div>

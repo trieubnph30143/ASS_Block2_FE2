@@ -18,8 +18,8 @@ const SearchProduct = () => {
   };
   useEffect(() => {
     getAll();
-  }, []);
-  console.log(product);
+  }, [search]);
+
   return (
     <div className='container mx-auto'>
       <div style={{ marginTop: "50px" }}>

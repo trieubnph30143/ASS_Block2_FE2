@@ -93,3 +93,16 @@ h6 {
 
   transition: opacity 0.4s ease-in;
 }
+
+.product-hover .product-hover-name:hover .dropdownHover {
+  display: block;
+}
+
+.product-hover .dropdownHover {
+  top: 20px;
+  position: absolute;
+  display: none;
+}
+a {
+  text-decoration: none !important;
+}

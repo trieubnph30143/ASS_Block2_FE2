@@ -2,15 +2,26 @@ import { useEffect, useState } from "react";
 import Banner from "./Banner";
 import Content from "./Content";
 import ProductList from "./ProductList";
-import { getProduct } from "../../../service/product";
+import { getCategoryProduct, getProduct } from "../../../service/product";
 
 const Home = () => {
-  const [product, setProduct] = useState([]);
+  const [productHandle, setProductHandle] = useState([]);
+  const [productMachine, setProductMachine] = useState([]);
   const getAll = async () => {
     try {
-      let data = await getProduct({ page: 0, limit: 4 });
-      if (data?.status === 0) {
-        setProduct(data.data);
+      let gamingHandle: any = await getCategoryProduct({
+        page: 0,
+        limit: 4,
+        id: "65a4b6ed94169f6d14f5dffe",
+      });
+      let gamingMachine: any = await getCategoryProduct({
+        page: 0,
+        limit: 4,
+        id: "65a4b6fb94169f6d14f5e000",
+      });
+      if (gamingHandle?.status === 0 && gamingMachine?.status === 0) {
+        setProductMachine(gamingMachine.data);
+        setProductHandle(gamingHandle.data);
       }
     } catch (error) {
       console.log(error);
@@ -24,12 +35,12 @@ const Home = () => {
     <div>
       <div className='container mx-auto'>
         <Content />
-        <ProductList product={product} />
+        <ProductList title={"Gaming Handle"} product={productHandle} />
       </div>
 
       <Banner />
       <div className='container mx-auto'>
-        <ProductList product={product} />
+        <ProductList title={"Gaming Machine"} product={productMachine} />
       </div>
     </div>
   );

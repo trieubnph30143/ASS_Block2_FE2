@@ -13,6 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import Loading from "../../../components/Loading";
 const schema = yup.object({
   title: yup.string().required(),
   price: yup.number().required(),
@@ -40,7 +41,7 @@ const EditProduct = () => {
     image3: "",
     image4: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -80,6 +81,7 @@ const EditProduct = () => {
   }, []);
 
   const onSubmit = async (value: any) => {
+    setLoading(true);
     try {
       let url = "";
       let keyImage = "";
@@ -100,6 +102,8 @@ const EditProduct = () => {
               ...prevState,
               [key]: response.data.url,
             }));
+          } else {
+            setLoading(false);
           }
         }
       }
@@ -110,8 +114,6 @@ const EditProduct = () => {
           arr.push(value);
         }
       }
-
-      console.log(arr);
 
       let data = {
         title: value.title,
@@ -132,7 +134,7 @@ const EditProduct = () => {
       console.log(error);
     }
   };
-  // console.log(imageUrl);
+
   const handleChangeImage = (event: any, type: string) => {
     setMessageImage((prevState) => ({ ...prevState, [type]: "" }));
     setImage({ ...image, [type]: event.target.files });
@@ -149,6 +151,7 @@ const EditProduct = () => {
 
   return (
     <>
+      {loading && <Loading />}
       <div className=' w-[1150px]  bg-gray-100 mt-[20px]'>
         <div className='container max-w-screen-lg mx-auto'>
           <div>
